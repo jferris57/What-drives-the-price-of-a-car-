@@ -1,6 +1,8 @@
 # What drives the price of a car?
 Our goal is to understand what factors make a car more or less expensive. We are using a dataset from Kaggle that contains information on 426k used car sales. As a result of our analysis, we should provide clear recommendations to our client -- a used car dealership -- as to what consumers value in a used car. We will use the CRISP-DM framework for this project.
 
+My Jupyter Notebook containing my work can be found [here](https://github.com/jferris57/What-drives-the-price-of-a-car-/blob/main/What_drives_the_price_of_a_car_.ipynb)
+
 ## Business Understanding
 Rephrasing this into a technical data science problem, can we accurately predict the price of a used car given different features of said car? Which features are the most important for predicting price? After determining the most important features, predict the price of a car using a regression model.
 
@@ -60,11 +62,46 @@ I converted all of our categorical data into dummy variables to prepare for our 
 ## Modeling
 We will be building models with three different regression algorithms: Linear, Ridge, and Lasso. We will use Recursive Feature Elimination to determine the best number of features to use for each.
 
-First, we separate our training data from our target 'price' column. Then we perform a train/test split. I created 3 pipelines to use for our models and used GridSearchCV to find the best hyperparameters for our models. I decided to have it try between 1 and 2 polynomial degree and between 4, 8, or 12 features. For the ridge and lasso algorithms, we searched between alpha values of 0.01, 0.1, 1, 10 and 100 for the best alpha hyperparameter.
+First, we separate our training data from our target 'price' column. Then we perform a train/test split. I created 3 pipelines to use for our models and used GridSearchCV to find the best hyperparameters for our models. I decided to have it try between 1 and 2 polynomial degree and between 4, 8, or 12 features. For the ridge and lasso algorithms, we searched between alpha values of 0.01, 0.1, 1, 10 and 100 for the best alpha hyperparameter. For the lasso model specifically, I did not have it search for the optimal number of features because I wanted it to perform its own feature selection. Here is the evaluation of each model and the error metrics associated with them:
+
+![image](https://github.com/user-attachments/assets/2e730152-0207-425c-9e65-020537bb7c6b)
+
 
 ## Evaluation
+With some modeling accomplished, we aim to reflect on what we identify as a high-quality model and what we are able to learn from this. We should review our business objective and explore how well we can provide meaningful insight into drivers of used car prices.
+
+After creating 3 regression models, we can see that the Lasso model performed the best. According to R2 score, these models aren't extremely accurate in their predictions. Going back and looking at the correlation matrix we created, none of the features were correlated very strongly with price.
+
+Perhaps we would need to go back and see if any of the data we cut out was important or maybe we would need to collect new data entirely that is more applicable to our situation.
+
+I had initially gone back and removed additional features to reduce model complexity and training time.
+
+For each model, I pulled out the features that they used and the coefficients associated with them to determine the importance of each.
+
+Linear model:
+
+![image](https://github.com/user-attachments/assets/5c4c3848-5146-40ce-8165-b82c66529199)
+
+Ridge model:
+
+![image](https://github.com/user-attachments/assets/c3fa1a72-5042-4cf1-96c7-740ad56e3cef)
+
+Lasso model:
+
+![image](https://github.com/user-attachments/assets/46496af4-c246-47ee-a377-b0397b9d2748)
+
+
 
 ## Deployment
+Now that we've settled on our models and findings, it is time to deliver the information to the client.
+
+After studying over 426k used car sales, we have a good understanding of what drives the sale of a car. As you can see by the graph, certain features of the car make it more valuable and others will make it less valuable.
+
+The biggest impact on the price came from the year of the car. The year of the car has a positive impact on sale price, the newer the car the higher the price.The next biggest impact came from the mileage. More mileage leads to lower value and lower sale price. Out of all the types of vehicles sold, trucks had the biggest positive impact on price. It seems that sedans sold at a lower price than other vehicles that were listed.
+
+## Next steps
+To further help this customer, I would continue to grab more data. The dataset used for this scenario had a lot of missing and odd data. I would like to see if I could find a better dataset, or if new data would help our model accuracy. I would try to train new models on this data and see if I can receive higher accuracy.
+
 
 
 
